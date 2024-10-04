@@ -1,0 +1,39 @@
+<!-- <% layout('layouts/boilarplate.ejs') -%> -->
+
+<body>
+    <div class="show-container">
+        <h2>Listing details: </h2>
+        <div class="list-container">
+            <div class="lp1">
+                <img src="<%= showListing.image.url %>" alt="">
+            </div>
+            <div class="lp2">
+                <h3>
+                    <%= showListing.title %>
+                </h3>
+                <p>
+                    <span>Description: </span>
+                    <%= showListing.description %>
+                </p>
+                <p>
+                    <span>Location: </span>
+                    <%= showListing.location %>
+                </p>
+                <p>
+                    <span>Country: </span>
+                    <%= showListing.country %>
+                </p>
+                <h5><span>Price: </span> &#8377; <%= showListing.price.toLocaleString('en-IN') %> /night
+                </h5>
+            </div>
+        </div>
+        <div class="btn1">
+            <form action="/listing/edit/<%= showListing._id %>">
+                <button class="m">Edit</button>
+            </form>
+            <form method="post" action="/listing/delete/<%= showListing._id %>?_method=DELETE">
+                <button class="n">Delete</button>
+            </form>
+        </div>
+    </div>
+</body>

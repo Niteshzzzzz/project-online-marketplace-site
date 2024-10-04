@@ -1,0 +1,17 @@
+.navbar {
+    padding-block: 2vh !important;
+}
+
+.nav-link {
+    margin-inline: 2.4vw;
+}
+
+.fa-solid {
+    color: rgba(215, 80, 80, 0.735);
+    font-size: 30px;
+    padding-inline: 2px 12px;
+}
+
+.m{
+    background-color: aqua;
+}

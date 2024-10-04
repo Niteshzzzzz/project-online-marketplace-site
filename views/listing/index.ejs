@@ -1,0 +1,23 @@
+<% layout('layouts/boilarplate.ejs') -%>
+
+    <body>
+        <div class="index-container">
+            <h2>All Listing: </h2>
+            <div class="all">
+                <% allListing.forEach(listing=> { %>
+                    <a class="cake-card" href="/listing/show/<%= listing._id %>">
+                        <div class="image">
+                            <img src="<%= listing.image.url %>" alt="">
+                        </div>
+                        <div class="p2">
+                            <h5 style="color: black;">
+                                <%= listing.title %>
+                            </h5>
+                            <h5 style="color: black;">&#8377; <%= listing.price.toLocaleString('en-IN') %>/night
+                            </h5>
+                        </div>
+                    </a>
+                    <% })%>
+            </div>
+        </div>
+    </body>
