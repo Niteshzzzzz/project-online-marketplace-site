@@ -2,12 +2,13 @@ const express = require('express')
 const app = express();
 const mongooseConnnection = require('./config/mongoose')
 const listingModel = require('./models/listing')
+const reviewModel = require('./models/review.js')
 const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate')
 const path = require('path')
 const wrapAsync = require('./utils/wrapAsync')
 const expressError = require('./utils/expressError')
-const {listingSchema} = require('./schemaValidate.js')
+const {listingSchema, reviewSchema} = require('./schemaValidate.js')
 
 app.set('view engine', 'ejs')
 app.use(express.json())
@@ -25,21 +26,18 @@ const validateListing = (req, res, next) => {
     next()
 }
 
+const validateReview = (req, res, next) => {
+    const {error} = reviewSchema.validate(req.body);
+    if (error) {
+        throw new expressError(400, error)
+    }
+    next()
+}
+
 app.get('/', (req, res) => {
     res.send('working...')
 })
 
-// app.get('/test', async (req, res) => {
-//     let createdListing = await listingModel.create({
-//         title: "Apna Villa",
-//         description: "Apna Villa is available to book room on rent.",
-//         price: 2000,
-//         location: "kookas Jaipur, Rajasthan",
-//         country: "India"
-//     })
-//     console.log('listing created successfully');
-//     res.send(createdListing)
-// })
 
 // index route
 app.get('/listing', wrapAsync(async (req, res) => {
@@ -94,6 +92,18 @@ app.delete('/listing/delete/:id', wrapAsync(async (req, res) => {
     await listingModel.findOneAndDelete({ _id: id })
     res.redirect('/listing')
 }))
+
+// Reviews
+// review post route
+app.post('/listings/:id/reviews', validateReview, wrapAsync(async (req, res) => {
+    const curlisting = await listingModel.findById(req.params.id)
+    console.log(curlisting)
+    const newReview = new reviewModel(req.body.review)
+    curlisting.reviews.push(newReview)
+    await curlisting.save()
+    await newReview.save()
+    res.redirect(`/listing/show/${curlisting._id}`)
+}));
 
 app.all('*', (req, res, next) => {
     next(new expressError(404, 'Page Not Found.'))
