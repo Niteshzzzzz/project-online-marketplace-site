@@ -45,10 +45,32 @@
                 </div>
                 <div class="comment-contain mt-3 mb-3">
                     <label for="comment" class="form-label">Write Comment:</label>
-                    <textarea name="review[comment]" id="comment" class="form-control"></textarea>
+                    <textarea name="review[comment]" id="comment" class="form-control" required></textarea>
                 </div>
                 <button class="btn btn-outline-dark">Submit</button>
             </form>
         </div>
+
+        <div class="row">
+            <hr>
+            <p class="ms-4"><b>All Reviews</b></p>
+            <% showListing.reviews.forEach((review) => { %>
+                <div class="card col-5 mb-4 ms-4">
+                    <div class="card-header">
+                      John Wick
+                    </div>
+                    <div class="card-body">
+                      <blockquote class="blockquote mb-0">
+                        <p><%= review.rating %> Stars</p>
+                        <footer class="blockquote-footer"><%= review.comment %></footer>
+                      </blockquote>
+                    </div>
+                    <form action="/listing/<%= showListing._id %>/review/<%= review._id %>?_method=DELETE" method="post">
+                        <button class="btn btn-outline-danger mb-3">Delete</button>
+                    </form>
+                  </div>
+            <% }) %>
+        </div>
+
     </div>
 </body>

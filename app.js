@@ -48,7 +48,7 @@ app.get('/listing', wrapAsync(async (req, res) => {
 //show route
 app.get('/listing/show/:id', wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let showListing = await listingModel.findOne({ _id: id })
+    let showListing = await listingModel.findOne({ _id: id }).populate('reviews')
     res.render('listing/show.ejs', { showListing })
 }))
 
@@ -104,6 +104,14 @@ app.post('/listings/:id/reviews', validateReview, wrapAsync(async (req, res) => 
     await newReview.save()
     res.redirect(`/listing/show/${curlisting._id}`)
 }));
+
+// delete review route
+app.delete('/listing/:id/review/:reviewId', wrapAsync(async (req, res) => {
+    let {id, reviewId} = req.params
+    await listingModel.findByIdAndUpdate(id, {$pull: {reviews: reviewId}})
+    await reviewModel.findByIdAndDelete(reviewId)
+    res.redirect(`/listing/show/${id}`)
+}))
 
 app.all('*', (req, res, next) => {
     next(new expressError(404, 'Page Not Found.'))
