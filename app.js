@@ -49,6 +49,7 @@ app.get('/', (req, res) => {
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.currUser = req.user;
     next();
 })
 
@@ -74,6 +75,7 @@ app.use((err, req, res, next) => {
     res.status(status).send(message);
     res.render('error.ejs', { message, status })
 })
+
 
 app.listen(3000, () => {
     console.log('Connected to server.');

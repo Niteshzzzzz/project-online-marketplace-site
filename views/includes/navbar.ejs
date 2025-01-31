@@ -1,13 +1,14 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top border-bottom">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+      aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#"><i class="fa-solid fa-spa"></i>BookMyStay</a>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link"  href="/">Home</a>
+          <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/listing">All Listings</a>
@@ -20,6 +21,22 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle ms-2" type="button" data-bs-toggle="dropdown"
+          aria-expanded="false" style="--bs-btn-bg: #6f6f6f;">
+          <i class="fa-solid fa-user" style="font-size: 22px; color: rgb(81, 136, 255);"></i>
+        </button>
+        <ul class="dropdown-menu" style="--bs-dropdown-min-width: 6rem;">
+          <% if(!currUser) { %>
+            <li><a class="dropdown-item" href="/login">LogIn</a></li>
+            <li><a class="dropdown-item" href="/signup">SignUp</a></li>
+          <% } %>
+          <% if(currUser) { %>
+            <li><a class="dropdown-item" href="/logout">LogOut</a></li>
+          <% } %>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
