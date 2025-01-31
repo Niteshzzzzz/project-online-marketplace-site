@@ -1,0 +1,23 @@
+<%- layout('./layouts/boilarplate.ejs') %>
+    <div class="new-container" style="display: flex; align-items: center; justify-content: start; flex-direction: column; margin-top: 40px;">
+        <h2 style="text-decoration: underline; padding-bottom: 10px;">Sign Up </h2>
+        <form action="/signup" method="post" class="needs-validation" novalidate>
+            <div class="container">
+                <div class="title-c c">
+                    <label for="username" class="form-label">Enter username: </label>
+                    <input type="text" name="username" id="username" class="form-control" required>
+                </div>
+                <div class="description-c c">
+                    <label for="email" class="form-label">Enter email: </label>
+                    <input type="email" name="email" id="email" class="form-control" required>
+                </div>
+                <div class="image-c c">
+                    <label for="password" class="form-label">Enter password: </label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                </div>
+
+                <div class="newbt mt-4">
+                    <button class="btn btn-success ms-2" type="submit">SignUp</button>
+                </div>
+        </form>
+    </div>
