@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const mongooseConnect = require('../config/mongoose');
-const listingData = require('./data');
+let listingData = require('./data');
 const listingModel = require('../models/listing');
 
 // mongoose.connect('mongodb://127.0.0.1:27017/WanderLust')
 
 const init = async () => {
-await listingModel.insertMany(listingData)
-    
+
+listingData = listingData.map(obj => ({...obj, owner: '679ca598e140fe11fa628faf'}))
+await listingModel.insertMany(listingData)    
 }
 
 init()

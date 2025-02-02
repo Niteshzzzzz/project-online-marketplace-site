@@ -1,7 +1,7 @@
 <!-- <% layout('layouts/boilarplate.ejs') -%> -->
 
 <body>
-    <div class="show-container">
+    <div class="show-container" style="overflow-x: hidden;">
         <h2>Listing details: </h2>
         <div class="list-container">
             <div class="lp1">
@@ -11,6 +11,10 @@
                 <h3>
                     <%= showListing.title %>
                 </h3>
+                <p style="font-style: italic;">
+                    <span>Owned By: </span>
+                    <%= showListing.owner.username %>
+                </p>
                 <p>
                     <span>Description: </span>
                     <%= showListing.description %>
@@ -27,50 +31,59 @@
                 </h5>
             </div>
         </div>
-        <div class="btn1">
-            <form action="/listing/edit/<%= showListing._id %>">
-                <button class="m">Edit</button>
-            </form>
-            <form method="post" action="/listing/delete/<%= showListing._id %>?_method=DELETE">
-                <button class="n">Delete</button>
-            </form>
-        </div>
-        <div class="col-8 offset-1 mt-3 mb-3" >
-            <hr>
-            <h4  class="mt-3 mb-3">Leave a Review</h4>
-            <form action="/listing/<%= showListing._id %>/review" method="post" novalidate class="needs-validation">
-                <div class="rating-container mt-3 mb-3">
-                    <label for="rating" class="form-label">Rating:</label>
-                    <input type="range" min="0" max="5" name="review[rating]"  class="form-range">
-                </div>
-                <div class="comment-contain mt-3 mb-3">
-                    <label for="comment" class="form-label">Write Comment:</label>
-                    <textarea name="review[comment]" id="comment" class="form-control" required></textarea>
-                </div>
-                <button class="btn btn-outline-dark">Submit</button>
-            </form>
-        </div>
-
-        <div class="row">
-            <hr>
-            <p class="ms-4"><b>All Reviews</b></p>
-            <% showListing.reviews.forEach((review) => { %>
-                <div class="card col-5 mb-4 ms-4">
-                    <div class="card-header">
-                      John Wick
-                    </div>
-                    <div class="card-body">
-                      <blockquote class="blockquote mb-0">
-                        <p><%= review.rating %> Stars</p>
-                        <footer class="blockquote-footer"><%= review.comment %></footer>
-                      </blockquote>
-                    </div>
-                    <form action="/listing/<%= showListing._id %>/review/<%= review._id %>?_method=DELETE" method="post">
-                        <button class="btn btn-outline-danger mb-3">Delete</button>
+        <% if(currUser && showListing.owner.equals(currUser._id)){ %>
+            <div class="btn1">
+                <form action="/listing/edit/<%= showListing._id %>">
+                    <button class="m">Edit</button>
+                </form>
+                <form method="post" action="/listing/delete/<%= showListing._id %>?_method=DELETE">
+                    <button class="n">Delete</button>
+                </form>
+            </div>
+        <% } %> <% if(currUser) { %>
+                <div class="col-8 offset-1 mt-3 mb-3">
+                    <hr>
+                    <h4 class="mt-3 mb-3">Leave a Review</h4>
+                    <form action="/listing/<%= showListing._id %>/review" method="post" novalidate
+                        class="needs-validation">
+                        <div class="rating-container mt-3 mb-3">
+                            <label for="rating" class="form-label">Rating:</label>
+                            <input type="range" min="0" max="5" name="review[rating]" class="form-range">
+                        </div>
+                        <div class="comment-contain mt-3 mb-3">
+                            <label for="comment" class="form-label">Write Comment:</label>
+                            <textarea name="review[comment]" id="comment" class="form-control" required></textarea>
+                        </div>
+                        <button class="btn btn-outline-dark">Submit</button>
                     </form>
-                  </div>
-            <% }) %>
-        </div>
+                </div>
+            <% } %>
+
+                <div class="row" >
+                    <hr style="width: 95%; margin-inline: auto;">
+                    <p class="ps-4"><b>All Reviews</b></p>
+                    <% showListing.reviews.forEach((review)=> { %>
+                        <div class="card col-5 mb-4 ms-4">
+                            <div class="card-header">
+                                <%= review.author.username %>
+                            </div>
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <p>
+                                        <%= review.rating %> Stars
+                                    </p>
+                                    <footer class="blockquote-footer">
+                                        <%= review.comment %>
+                                    </footer>
+                                </blockquote>
+                            </div>
+                            <form action="/listing/<%= showListing._id %>/review/<%= review._id %>?_method=DELETE"
+                                method="post">
+                                <button class="btn btn-outline-danger mb-3">Delete</button>
+                            </form>
+                        </div>
+                        <% }) %>
+                </div>
 
     </div>
 </body>
