@@ -4,7 +4,7 @@
         <div class="new-container">
             <h2>Create New Listing: </h2>
             <form action="/listing/create" method="post" style="padding: 22px 32px;" class="needs-validation"
-                novalidate>
+                novalidate enctype="multipart/form-data">
                 <div class="container">
                     <div class="title-c c">
                         <label for="title" class="form-label">Enter Title: </label>
@@ -14,9 +14,13 @@
                         <label for="desc" class="form-label">Enter Description: </label>
                         <textarea name="description" id="desc" class="form-control" required></textarea>
                     </div>
-                    <div class="image-c c">
+                    <!-- <div class="image-c c">
                         <label for="im">Enter Image URL: </label>
                         <input type="text" name="url" id="im">
+                    </div> -->
+                    <div class="image-c c">
+                        <label for="im">Upload Image: </label>
+                        <input type="file" name="url" id="im">
                     </div>
                     <div class="sub-c">
                         <div class="price-c c">
